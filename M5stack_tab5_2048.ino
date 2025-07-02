@@ -48,9 +48,8 @@ const uint16_t NUMBER_COLORS[] = {
 
 // Font size thresholds for different number lengths
 namespace FontThresholds {
-  const int SHORT_NUMBER_MAX_LENGTH = 2;   // 2 digits: use Font8
-  const int MEDIUM_NUMBER_MAX_LENGTH = 3;  // 3 digits: use Font6
-  const int LONG_NUMBER_MAX_LENGTH = 4;    // 4+ digits: use Font4
+  const int SHORT_NUMBER_MAX_LENGTH = 3;   // 1-3 digits: use Font8
+  const int MEDIUM_NUMBER_MAX_LENGTH = 4;  // 4 digits: use Font6
 }
 
 // Screen layout constants
@@ -167,22 +166,17 @@ const char* GameBoard::getNumberText(int value) const {
     return numberTexts[value];
   }
   
-  // For values beyond 2048, calculate the actual number
-  static char buffer[16];
-  const int actualValue = 1 << value;
-  snprintf(buffer, sizeof(buffer), "%d", actualValue);
-  return buffer;
+  // For values beyond our array, return empty string
+  return "";
 }
 
 const lgfx::IFont* GameBoard::selectOptimalFont(const char* text) const {
   const int textLength = strlen(text);
   
   if (textLength <= FontThresholds::SHORT_NUMBER_MAX_LENGTH) {
-    return &fonts::Font8;  // Large font for 1-2 digits
-  } else if (textLength <= FontThresholds::MEDIUM_NUMBER_MAX_LENGTH) {
-    return &fonts::Font6;  // Medium font for 3 digits
+    return &fonts::Font8;  // Large font for 1-3 digits
   } else {
-    return &fonts::Font4;  // Small font for 4+ digits
+    return &fonts::Font6;  // Medium font for 4 digits
   }
 }
 
@@ -604,8 +598,6 @@ GameState currentGameState = GameState::Playing;
 void setup() {
   auto config = M5.config();
   M5.begin(config);
-  Serial.begin(115200);
-  Serial.println("M5Stack Tab5 2048 Game - Enhanced Number Display");
   
   gameBoard = new GameBoard();
   gameBoard->initializeGame();
