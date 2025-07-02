@@ -46,6 +46,13 @@ const uint16_t NUMBER_COLORS[] = {
 #define GAME_WIN         100    // Game clear
 #define NEW_GAME_BUTTON  10     // NEW GAME button ID
 
+// Font size thresholds for different number lengths
+namespace FontThresholds {
+  const int SHORT_NUMBER_MAX_LENGTH = 2;   // 2 digits: use Font8
+  const int MEDIUM_NUMBER_MAX_LENGTH = 3;  // 3 digits: use Font6
+  const int LONG_NUMBER_MAX_LENGTH = 4;    // 4+ digits: use Font4
+}
+
 // Screen layout constants
 namespace Layout {
   const int PANEL_SIZE = 160;
@@ -83,6 +90,10 @@ private:
   int boardStartX, boardStartY;
   int dpadCenterX, dpadCenterY;
 
+  // Helper methods for number display
+  const char* getNumberText(int value) const;
+  const lgfx::IFont* selectOptimalFont(const char* text) const;
+
 public:
   GameBoard();
   
@@ -116,18 +127,18 @@ GameBoard::GameBoard() {
   randomSeed(analogRead(0));
   
   // Get screen size
-  int screenWidth = M5.Display.width();
-  int screenHeight = M5.Display.height();
+  const int screenWidth = M5.Display.width();
+  const int screenHeight = M5.Display.height();
   
   // Calculate board position
-  int boardTotalSize = 4 * Layout::PANEL_SIZE + 5 * Layout::BORDER_SIZE;
+  const int boardTotalSize = 4 * Layout::PANEL_SIZE + 5 * Layout::BORDER_SIZE;
   boardStartX = (screenWidth - boardTotalSize) / 2;
   boardStartY = 220; // Below title and score display
   
   // Calculate panel positions
   for (int i = 0; i < BOARD_SIZE; i++) {
-    int col = i % 4;
-    int row = i / 4;
+    const int col = i % 4;
+    const int row = i / 4;
     panelPositions[i].x = boardStartX + Layout::BORDER_SIZE + 
                          (col * (Layout::PANEL_SIZE + Layout::BORDER_SIZE));
     panelPositions[i].y = boardStartY + Layout::BORDER_SIZE + 
@@ -142,6 +153,37 @@ GameBoard::GameBoard() {
   dpadPositions[1] = {dpadCenterX + Layout::DPAD_SIZE + Layout::DPAD_GAP, dpadCenterY}; // Right
   dpadPositions[2] = {dpadCenterX, dpadCenterY + Layout::DPAD_SIZE + Layout::DPAD_GAP}; // Down
   dpadPositions[3] = {dpadCenterX - Layout::DPAD_SIZE - Layout::DPAD_GAP, dpadCenterY}; // Left
+}
+
+// =============================================================================
+// Helper methods for improved number display
+// =============================================================================
+const char* GameBoard::getNumberText(int value) const {
+  static const char* numberTexts[] = {
+    "", "2", "4", "8", "16", "32", "64", "128", "256", "512", "1024", "2048"
+  };
+  
+  if (value >= 0 && value < static_cast<int>(sizeof(numberTexts) / sizeof(numberTexts[0]))) {
+    return numberTexts[value];
+  }
+  
+  // For values beyond 2048, calculate the actual number
+  static char buffer[16];
+  const int actualValue = 1 << value;
+  snprintf(buffer, sizeof(buffer), "%d", actualValue);
+  return buffer;
+}
+
+const lgfx::IFont* GameBoard::selectOptimalFont(const char* text) const {
+  const int textLength = strlen(text);
+  
+  if (textLength <= FontThresholds::SHORT_NUMBER_MAX_LENGTH) {
+    return &fonts::Font8;  // Large font for 1-2 digits
+  } else if (textLength <= FontThresholds::MEDIUM_NUMBER_MAX_LENGTH) {
+    return &fonts::Font6;  // Medium font for 3 digits
+  } else {
+    return &fonts::Font4;  // Small font for 4+ digits
+  }
 }
 
 // =============================================================================
@@ -173,7 +215,7 @@ void GameBoard::drawInitialBoard() {
   M5.Display.setTextWrap(false);
   
   // Draw board background
-  int boardTotalSize = 4 * Layout::PANEL_SIZE + 5 * Layout::BORDER_SIZE;
+  const int boardTotalSize = 4 * Layout::PANEL_SIZE + 5 * Layout::BORDER_SIZE;
   M5.Display.fillRoundRect(boardStartX, boardStartY, 
                           boardTotalSize, boardTotalSize, 8, BOARDCOLOR);
   
@@ -242,12 +284,10 @@ void GameBoard::drawVirtualDPad() {
 }
 
 // =============================================================================
-// Panel drawing
+// Enhanced Panel drawing with adaptive font sizing
 // =============================================================================
 void GameBoard::drawPanel(int index) {
-  const char *numberTexts[] = {"","2","4","8","16","32","64","128","256","512","1024","2048"};
-  
-  int value = panels[index];
+  const int value = panels[index];
   
   // Draw panel background
   M5.Display.fillRoundRect(panelPositions[index].x, panelPositions[index].y, 
@@ -255,13 +295,16 @@ void GameBoard::drawPanel(int index) {
   
   // Draw number (only if value exists)
   if (value > 0) {
+    const char* numberText = getNumberText(value);
+    const lgfx::IFont* optimalFont = selectOptimalFont(numberText);
+    
     M5.Display.setTextColor(NUMBER_COLORS[value]);
     M5.Display.setTextDatum(middle_center);
-    M5.Display.setFont(&fonts::Font8);
+    M5.Display.setFont(optimalFont);
     
-    int centerX = panelPositions[index].x + Layout::PANEL_SIZE / 2;
-    int centerY = panelPositions[index].y + Layout::PANEL_SIZE / 2;
-    M5.Display.drawString(numberTexts[value], centerX, centerY);
+    const int centerX = panelPositions[index].x + Layout::PANEL_SIZE / 2;
+    const int centerY = panelPositions[index].y + Layout::PANEL_SIZE / 2;
+    M5.Display.drawString(numberText, centerX, centerY);
   }
 }
 
@@ -326,7 +369,7 @@ void GameBoard::slideLeft() {
     
     // Pack non-zero values to the left
     for (int col = 0; col < 4; col++) {
-      int value = panels[row * 4 + col];
+      const int value = panels[row * 4 + col];
       if (value != 0) {
         tempRow[writeIndex++] = value;
       }
@@ -378,14 +421,14 @@ int GameBoard::mergeAndSlide() {
   // Merge same values
   for (int row = 0; row < 4; row++) {
     for (int col = 0; col < 3; col++) {
-      int currentIndex = row * 4 + col;
-      int nextIndex = currentIndex + 1;
+      const int currentIndex = row * 4 + col;
+      const int nextIndex = currentIndex + 1;
       
       if (panels[currentIndex] != 0 && panels[currentIndex] == panels[nextIndex]) {
         panels[currentIndex]++;
         panels[nextIndex] = 0;
         
-        int value = 1 << panels[currentIndex];
+        const int value = 1 << panels[currentIndex];
         scoreIncrease += value;
         score += value;
       }
@@ -416,7 +459,7 @@ void GameBoard::executeMove(int direction) {
       break;
   }
   
-  int scoreIncrease = mergeAndSlide();
+  const int scoreIncrease = mergeAndSlide();
   
   // Restore original orientation
   switch (direction) {
@@ -468,7 +511,7 @@ int GameBoard::addRandomTile() {
   }
   
   // Add new tile to random empty position
-  int randomIndex = emptyPositions[random(emptyPositions.size())];
+  const int randomIndex = emptyPositions[random(emptyPositions.size())];
   panels[randomIndex] = (random(100) < 10) ? 2 : 1; // 10% chance for 4, 90% for 2
   drawPanel(randomIndex);
   
@@ -562,7 +605,7 @@ void setup() {
   auto config = M5.config();
   M5.begin(config);
   Serial.begin(115200);
-  Serial.println("M5Stack Tab5 2048 Game - Clean Version");
+  Serial.println("M5Stack Tab5 2048 Game - Enhanced Number Display");
   
   gameBoard = new GameBoard();
   gameBoard->initializeGame();
@@ -580,7 +623,7 @@ void loop() {
   auto touch = M5.Touch.getDetail();
   
   if (touch.wasReleased()) {
-    int touchResult = gameBoard->checkTouchInput(touch.x, touch.y);
+    const int touchResult = gameBoard->checkTouchInput(touch.x, touch.y);
     
     if (currentGameState == GameState::Playing) {
       // Direction key processing
