@@ -159,7 +159,7 @@ Search: "M5Unified" → Install latest version
 - **Tab5**: Tools > Board > M5Stack-Tab5
 
 5. **Upload the Program**
-- Open `2048_M5stack_tab5.ino`
+- Open `M5stack_tab5_2048.ino`
 - Connect device via USB-C
 - Select correct COM port (Tools > Port)
 - Upload and enjoy!
