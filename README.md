@@ -1,332 +1,222 @@
-# M5Stack Tab5 2048 - Classic Puzzle Game with Large Touch Display
+# M5Stack Tab5 2048 - Classic Puzzle Game for Large Touch Display
 
-A fully-featured implementation of the popular 2048 puzzle game optimized for the M5Stack Tab5's large 10.1-inch touchscreen. Features authentic gameplay mechanics, persistent best score tracking, intuitive touch controls, and a polished visual interface that takes full advantage of the Tab5's expansive display.
+A fully-featured 2048 puzzle game optimized for the M5Stack Tab5's large 10.1-inch touchscreen. Enjoy intuitive touch controls, achievement celebrations, and persistent best score tracking anywhere you go.
 
-## Key Features
+## Game Features
 
-### Classic 2048 Gameplay  
-- **Authentic mechanics**: Slide tiles to combine matching numbers  
-- **4x4 grid**: Traditional board layout with smooth animations
-- **Win condition**: Reach the coveted 2048 tile to achieve victory
-- **Progressive difficulty**: Strategic gameplay that becomes increasingly challenging
+**Slide number tiles to reach 2048 in this classic puzzle game!**
 
-### Advanced Scoring System  
-- **Real-time score tracking**: Live score updates during gameplay  
-- **Persistent best score**: Automatically saves high scores to flash memory
-- **Visual score display**: Clear, prominent score and best score indicators
-
-### Intuitive Touch Interface  
-- **Virtual D-Pad**: Large, responsive directional controls  
-- **Touch feedback**: Visual confirmation for all touch interactions
-- **Single-tap controls**: Effortless tile movement in four directions
-- **New Game button**: Quick restart functionality
-
-### Optimized for Large Display  
-- **10.1-inch touchscreen**: Spacious gameplay area with large, easy-to-see tiles
-- **High-resolution graphics**: Crisp visuals that take advantage of the Tab5's display
-- **Comfortable touch targets**: Large virtual D-Pad buttons perfect for extended play
-- **Immersive experience**: Room for detailed score displays and clear game information
+- **Authentic 2048 Gameplay** - Classic rules that anyone can enjoy
+- **Achievement Celebrations** - Victory message for 2048, special effects for 4096  
+- **Large Touch Display** - Comfortable play on 10.1-inch screen
+- **Best Score Saving** - Automatically saves your highest score
 
 ---
 
-## Supported Devices
+## Supported Device
 
-| Device            | Input Method       | Special Features                          |
-|------------------|--------------------|-------------------------------------------|
-| **M5Stack Tab5**  | Touchscreen       | Large 10.1" display with precise touch controls |
+| Device            | Input Method  | Features                          |
+|------------------|---------------|-----------------------------------|
+| **M5Stack Tab5** | Touch Screen  | Comfortable play on 10.1" display |
 
 ---
 
-## Game Mechanics
+## Game Rules
 
-### Basic Rules
-- **Slide tiles** in any of four directions (up, down, left, right)
-- **Combine matching numbers** when they collide during sliding
-- **Create higher numbers** through strategic tile combinations
-- **Reach 2048** to win the game, but continue playing for higher scores
+### Basic Controls
+- **Slide tiles**: Move in four directions (up, down, left, right)
+- **Merge same numbers**: When tiles collide, they combine into the next number
+- **Create larger numbers**: Strategically combine tiles
+- **Reach 2048**: But you can aim even higher!
 
-### Tile Progression
+### Number Evolution
 ```
-2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 → 512 → 1024 → 2048
+2 → 4 → 8 → 16 → 32 → 64 → 128 → 256 → 512 → 1024 → 2048 → 4096
 ```
 
-### Win/Lose Conditions
-- **Victory**: Successfully create a 2048 tile
-- **Game Over**: Board fills completely with no possible moves
-- **Continue**: Keep playing after reaching 2048 for maximum scores
+### Victory, Game Over & Special Achievements
+- **2048 Achievement**: Gold celebration message → Continue playing
+- **4096 Achievement**: Legendary celebration with special effects → Tile resets to 2 and game continues
+- **Game Over**: When the board fills up and no moves are possible
 
 ---
 
-## Complete User Journey
+## How to Play
 
 ### 1. Game Start
-- Clean 4x4 grid with two random tiles (2 or 4)
-- Score starts at zero
-- Best score displays previous high score
+A 4×4 board appears with two tiles (2 or 4)
 
-### 2. Active Gameplay
-- Touch directional controls to slide tiles
-- Watch tiles combine and scores increase
-- New random tile appears after each valid move
+### 2. Move Tiles
+Touch the directional pad to slide all tiles in one direction
 
-### 3. Strategic Play
-- Plan moves to create larger tiles
-- Manage board space efficiently
-- Build toward the 2048 goal
+### 3. Merge Numbers
+When tiles with the same number collide, they merge into the next number
 
-### 4. Game Completion
-- Achieve victory by reaching 2048
-- Continue for higher scores
-- Start new game with improved strategy
+### 4. New Tile Appears
+After each valid move, a new tile (2 or 4) appears in a random empty space
+
+### 5. Achievement Celebrations
+- **2048 reached**: "Congratulations!" message (auto-clears after 3 seconds)
+- **4096 reached**: "Incredible! Legendary Achievement!" message
+- **4096 special handling**: The achieved tile automatically resets to 2
+
+### 6. Continue Playing
+Keep playing for higher scores even after achievements
 
 ---
 
-## Touch Controls
+## Controls
 
-### Virtual D-Pad Layout
-
+### Virtual D-Pad
 ```
     [ ↑ ]
 [ ← ]   [ → ]
     [ ↓ ]
 ```
 
-| Control Direction | Function          | Visual Feedback    |
-|------------------|-------------------|--------------------|
-| **Up Touch**     | Slide tiles up    | Button highlight   |
-| **Right Touch**  | Slide tiles right | Button highlight   |
-| **Down Touch**   | Slide tiles down  | Button highlight   |
-| **Left Touch**   | Slide tiles left  | Button highlight   |
+| Button | Action              |
+|--------|---------------------|
+| **↑**  | Slide all tiles up    |
+| **→**  | Slide all tiles right |
+| **↓**  | Slide all tiles down  |
+| **←**  | Slide all tiles left  |
 
-### Additional Controls
-
-| Touch Area        | Function          | Visual Feedback    |
-|------------------|-------------------|--------------------|
-| **NEW GAME**     | Restart game      | Button animation   |
-
-> All touch controls provide immediate visual feedback with color changes and brief animations.
+### Other Buttons
+| Button       | Action           |
+|-------------|------------------|
+| **NEW GAME** | Start a new game |
 
 ---
 
 ## Scoring System
 
 ### Score Calculation
-- **Tile value** determines points awarded
-- **Combined tiles** add their final value to score
-- **Multiple combinations** in single move accumulate
-- **Best score** automatically saves to flash memory
+- The final number of merged tiles becomes your points
+- Multiple merges in one move are all added together
+- Achievement bonuses included for 2048 and 4096
 
-### Score Display Elements
-- **Current Score**: Large, prominent display during gameplay
-- **Best Score**: Persistent high score tracking across sessions
-- **Real-time Updates**: Immediate score reflection after each move
-
-**Example Scoring:**
-- Combine two 2s → +4 points
-- Combine two 4s → +8 points  
-- Combine two 64s → +128 points
+### Examples
+- 2+2=4 → **4 points earned**
+- 4+4=8 → **8 points earned**
+- 64+64=128 → **128 points earned**
 
 ---
 
-## Setup Guide
+## Setup Instructions
 
 ### Requirements
-- Arduino IDE 1.8.19+
-- M5Stack board definitions
-- M5Unified library
+- Arduino IDE
+- M5Stack Tab5
 
-### Installation
+### Easy Installation
 
 1. **Configure Arduino IDE**
-```
-File > Preferences > Additional Board Manager URLs:
-https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
-```
+   - File > Preferences > Additional Board Manager URLs:
+   ```
+   https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json
+   ```
 
-2. **Install Board Support**
-```
-Tools > Board > Board Manager
-Search: "M5Stack" → Install
-```
+2. **Install M5Stack Boards**
+   - Tools > Board > Board Manager
+   - Search for "M5Stack" and install
 
-3. **Install Required Library**
-```
-Tools > Manage Libraries
-Search: "M5Unified" → Install latest version
-```
+3. **Install Library**
+   - Tools > Manage Libraries
+   - Search for "M5Unified" and install
 
-4. **Select Your Board**
-- **Tab5**: Tools > Board > M5Stack-Tab5
-
-5. **Upload the Program**
-- Open `M5stack_tab5_2048.ino`
-- Connect device via USB-C
-- Select correct COM port (Tools > Port)
-- Upload and enjoy!
+4. **Upload**
+   - Board setting: M5Stack-Tab5
+   - Open `M5stack_tab5_2048.ino` and upload
 
 ---
 
-## Visual Design
+## Strategy Tips
 
-### Color Palette
+### For Beginners
+- **Keep largest tile in corner**: Place big numbers in corners
+- **Build in one direction**: Try to arrange numbers in the same direction
+- **Ignore small merges**: Prioritize larger combinations
 
-| Tile Value | Background Color | Text Color | Hex Code   |
-|------------|------------------|------------|------------|
-| **Empty**  | Light Gray      | -          | #cdc1b4    |
-| **2**      | Light Beige     | Dark Gray  | #eee4da    |
-| **4**      | Light Orange    | Dark Gray  | #ede0c8    |
-| **8**      | Orange          | White      | #f2b179    |
-| **16+**    | Progressive     | White      | Various    |
+### Advanced Techniques
+- **Corner strategy**: Keep the largest tile in a corner and don't move it
+- **Linear arrangement**: Arrange tiles in ascending order along edges
+- **Reserve space**: Always keep one row or column available
 
-### Layout Elements
-- **Title**: Large "2048" branding
-- **Score Boxes**: Rounded rectangles with clean typography
-- **Game Board**: Central 4x4 grid with proper spacing
-- **Controls**: Large touch targets for easy interaction
-
----
-
-## Game Strategy Tips
-
-### Beginner Strategy
-- **Keep largest tile in corner**: Prevents fragmentation
-- **Build in one direction**: Maintain organized tile arrangement
-- **Don't chase small merges**: Focus on larger combinations
-
-### Advanced Techniques  
-- **Corner strategy**: Lock highest tile in corner position
-- **Linear building**: Create ascending sequences along edges
-- **Space management**: Always maintain at least one empty row/column
+### 4096 Achievement Strategy
+- **Continue after 2048**: Don't stop at 2048, keep playing
+- **Plan 4096 placement**: Think ahead about where 4096 will appear  
+- **Use resets strategically**: Incorporate the 4096→2 reset into your strategy
 
 ### Common Mistakes
-- **Random swiping**: Plan each move carefully
-- **Ignoring corners**: Center play leads to fragmentation
-- **Impatient merging**: Wait for optimal combination opportunities
+- **Random moves**: Don't move without planning
+- **Center play**: Use the edges instead of scattering tiles
+- **Rushing**: Take time to think about the optimal move
 
 ---
 
-## Technical Specifications
+## Understanding the Game Screen
 
-| Metric             | Value                    |
-| ------------------ | ------------------------ |
-| **Grid Size**      | 4×4 (16 tiles)          |
-| **Touch Response** | < 100ms                  |
-| **Memory Usage**   | < 30% of available RAM   |
-| **Display Update** | 60 FPS smooth rendering  |
-| **Save System**    | Flash memory persistence |
-| **Display**        | 10.1" touchscreen optimized |
+### Main Display
+- **2048 title**: Game name in the top left
+- **SCORE**: Current score display
+- **BEST**: Past highest score
+- **4×4 board**: Main game area
+- **D-pad**: Control buttons at the bottom of the screen
+- **NEW GAME**: Restart button
 
----
-
-## Performance Optimizations
-
-### Memory Management
-- **Static allocation**: Pre-calculated positions and layouts
-- **Efficient arrays**: Minimal dynamic memory usage
-- **Smart rendering**: Only redraw changed elements
-
-### Display Efficiency  
-- **Partial updates**: Redraw only modified panels
-- **Optimized fonts**: Balanced readability and performance
-- **Color caching**: Pre-defined RGB565 color constants
-
-### Input Responsiveness
-- **Touch debouncing**: Prevents accidental double-taps
-- **Visual feedback**: Immediate response confirmation
-- **Smooth animations**: 20ms update cycle for fluid experience
+### Celebration Messages
+- **2048 achievement**: Gold-bordered congratulations message
+- **4096 achievement**: Magenta and gold-bordered special message  
+- **Auto-clear**: Both disappear automatically after 3 seconds
 
 ---
 
-## Advanced Features
+## Frequently Asked Questions
 
-### Persistent Storage
-- **Best score tracking**: Survives power cycles and resets
-- **Flash memory usage**: Efficient non-volatile storage
-- **Data integrity**: Safe read/write operations
+### Q: What happens after reaching 2048?
+A: A celebration message appears, but you can continue playing. Aim for even higher scores!
 
-### Error Handling
-- **Move validation**: Prevents invalid tile movements
-- **Game state management**: Clean transitions between states
-- **Touch boundary checking**: Accurate input detection
+### Q: What happens when I create a 4096 tile?
+A: A special legendary achievement message appears, and that 4096 tile automatically resets to 2. You can continue playing.
 
-### Code Architecture
-- **Object-oriented design**: Clean GameBoard class structure
-- **Separation of concerns**: Logic, display, and input handling
-- **Extensible framework**: Easy to modify and enhance
+### Q: Is my best score saved?
+A: Yes, it's automatically saved even when you turn off the device.
 
----
+### Q: What if I make a wrong move?
+A: There's currently no UNDO function. Please move carefully.
 
-## Customization Options
-
-### Visual Modifications
-```cpp
-// Color theme adjustments
-#define BGCOLOR     0xFFBD  // Background color
-#define BOARDCOLOR  0xBDF3  // Board color
-#define TITLE_COLOR 0x938E  // Title color
-
-// Layout fine-tuning
-const int PANEL_SIZE = 160;     // Tile size
-const int BORDER_SIZE = 10;     // Spacing between tiles
-const int DPAD_SIZE = 100;      // Control button size
-```
-
-### Gameplay Tweaks
-```cpp
-// Tile spawn probability
-panels[randomIndex] = (random(100) < 10) ? 2 : 1; // 10% for 4, 90% for 2
-
-// Win condition
-if (panels[i] > 10) {  // Tile value 2048 (2^11)
-  return i + GAME_WIN;
-}
-```
+### Q: What if the game becomes slow?
+A: Try resetting with the NEW GAME button.
 
 ---
 
-## Troubleshooting
+## Ways to Enjoy
 
-### Common Issues
+### Casual Play
+- Time-killing during commute
+- Refreshing during breaks
+- Relaxing before bedtime
 
-| Problem              | Solution                              |
-|---------------------|---------------------------------------|
-| **Touch not working** | Check M5.Touch.getDetail() in loop  |
-| **Score not saving**  | Verify flash memory write permissions |
-| **Display corruption** | Ensure proper M5.Display.begin()    |
-| **Slow performance**   | Check for memory leaks in game loop |
+### Challenge Play
+- Aim for 2048 achievement
+- Reach 4096 legendary status
+- Beat your best score
+- Achieve 2048 with minimum moves
 
-### Debug Output
-Enable serial debugging for development:
-```cpp
-Serial.begin(115200);
-Serial.println("Touch detected: " + String(touch.x) + "," + String(touch.y));
-```
-
----
-
-## Roadmap
-
-### Planned Features
-- **Undo functionality**: Take back the last move
-- **Auto-save during gameplay**: Resume interrupted games
-- **Statistics tracking**: Games played, win percentage
-- **Custom tile themes**: Alternative visual styles
-
-### Hardware Expansion
-- **M5Stack Basic**: Button-based control adaptation
-- **External displays**: Larger screen support
-- **Multiplayer modes**: Turn-based gameplay
+### With Family & Friends
+- Score competitions
+- Take turns playing
+- Discuss strategies together
 
 ---
 
 ## License
 
-Released under the MIT License.  
-Free for personal, educational, and commercial use.
+Provided under MIT License. Free for personal, educational, and commercial use.
 
 ---
 
 ## Credits
 
-Based on the original 2048 game by Gabriele Cirulli.  
-Specifically optimized for M5Stack Tab5 hardware with enhanced touch controls and large display utilization.
+Original 2048 game by Gabriele Cirulli  
+M5Stack Tab5 optimized version with large touch controls, achievement system, and celebration effects
